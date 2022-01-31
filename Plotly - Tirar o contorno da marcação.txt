@@ -1,0 +1,51 @@
+ Tirar o contorno da marcação:
+
+
+
+import plotly.io as pio
+
+import plotly.express as px
+
+import json
+
+import pandas as pd
+
+import plotly.graph_objects as go 
+
+import plotly.figure_factory as ff
+
+import plotly.express as px
+
+
+
+
+
+df = px.data.carshare()
+
+
+
+mapa = px.density_mapbox(df, lat='centroid_lat', lon='centroid_lon', radius=30,
+
+                        zoom=10,
+
+                        mapbox_style='stamen-terrain',
+
+                        color_continuous_scale= [
+
+                [0.0, "green"],
+
+                [0.5, "green"],
+
+                [0.51111111, "yellow"],
+
+                [0.71111111, "yellow"],
+
+                [0.71111112, "red"],
+
+                [1, "red"]],
+
+                        opacity = 0.5)
+
+
+
+mapa.show()

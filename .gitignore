@@ -1,0 +1,6 @@
+
+#.gitignore
+dataset/
+bkp/
+*.zip
+modelo.joblib

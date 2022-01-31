@@ -1,0 +1,10 @@
+Localizando Elementos
+
+https://cursos.alura.com.br/forum/topico-duvida-sobre-como-localizar-elementos-no-dataframe-126204
+
+
+
+Deletando Elementos
+
+https://stackoverflow.com/questions/13411544/delete-a-column-from-a-pandas-dataframe
+
