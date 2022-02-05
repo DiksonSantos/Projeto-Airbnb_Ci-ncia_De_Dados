@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd
+
+# Para criar resultados exibidos na tela, porém estes possuem botões para interação com usuario.
+import streamlit as st
+import joblib
+
+
+# In[4]:
+
+
+modelo = joblib.load('modelo.joblib')
+
+
+# In[2]:
+
+
+# Este é o print das colunas de 'base_teste.columns'
+
+# SEPARAMOS ELAS EM Dicionarios com:
+
+# Colunas com Caracteristicas numericas
+x_numericos = {'latitude': 0, 'longitude': 0, 'accommodates': 0, 'bathrooms': 0, 'bedrooms': 0, 'beds': 0, 'extra_people': 0,
+               'minimum_nights': 0, 'ano': 0, 'mes': 0, 'n_amenities': 0, 'host_listings_count': 0}
+# Com, Verdadeiro ou Falso
+x_tf = {'host_is_superhost': 0, 'instant_bookable': 0}
+
+
+# Dicionario Com Listas
+x_listas = {'property_type': ['Apartment', 'Bed and breakfast', 'Condominium', 'Guest suite', 'Guesthouse', 'Hostel', 'House', 'Loft', 'Outros', 'Serviced apartment'],
+            'room_type': ['Entire home/apt', 'Hotel room', 'Private room', 'Shared room'],
+            'cancelation_policy': ['flexible', 'moderate', 'strict', 'strict_14_with_grace_period']
+            }
+
+# Criando botões com campos numericos:
+for item in x_numericos:
+    # Estas duas chaves conterão valores diferenciados dos das outras chaves:
+    if item == 'latitude' or item == 'longitude':
+        # Criando botão com texto referente a cada um dos itens percorridos, Usando o 'Streamlit'
+    # Numeros de Latitude e Longitude vão usar 5 casas numéricas
+    # Step -> Ao clicar, quantos numeros ele aumenta ou diminui
+    # value -> Como vai ser apresentado o campo (float ou 0.0)
+    # Format -> Especifica quantidade de casas Decimais , ou 5 casas.
+        valor = st.number_input(f'{item}', step=0.00001, value=0.0, format="%.5f")
+        # Outro tratamento peculiar para a chave 'extra_people':
+    elif item == 'extra_people':
+        valor = st.number_input(f'{item}', step=0.01, value=0.0)
+        # Caso seja algum outro valor do Dicionario.
+    else:
+        valor = st.number_input(f'{item}', step=1, value=0)
+    x_numericos[item] = valor
+
+
+
+#
+
+# Boteos com valores binários (Yes or Not)
+for item in x_tf:
+    # Especificamos o tipo de botão "SelectBox" com opções 'Sim' e 'Não
+    valor = st.selectbox(f'{item}', ('Sim', 'Não'))
+  
+    # Item do dicionario recebe o valor 1 ou 0
+    if valor == 'Sim':
+        x_tf[item] = 1
+    else:
+        x_tf[item] = 0
+
+
+# Passando os valores das Chaves do Dicionario como botão de multiplas opções
+for item in x_listas:
+    valor = st.selectbox(f'{item}', x_listas[item]) # Mostra valor das chaves.
+    
+    
+botao = st.button("Prever Valores Dos Imóveis")
+
+
+# In[ ]:
+
+# Pra Rodar o Arquivo de DEPLOY:
+# conda activate
+# streamlit run Deploy.py
+
